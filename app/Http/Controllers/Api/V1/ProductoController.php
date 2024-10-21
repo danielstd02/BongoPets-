@@ -22,7 +22,7 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
     // Validar Productos
- $datos = $request->validate([
+    $datos = $request->validate([
     'nombre' =>['required', 'string', 'max:100'],
     'descripcion' =>['nullable','string', 'max:255'],
     'precio' =>['required', 'integer', 'min:1000'],
@@ -46,12 +46,14 @@ class ProductoController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
+
     // Validar datos de entrada
      $datos = $request->validate([
     'nombre' =>['required', 'string','max:100'],
     'descripcion' =>['nullable','string', 'max:255'],
     'precio' =>['required', 'integer','min:1000'],
      ]);
+     
      // Actualizar Producto
      $producto->update($datos);
      // Respuesta al Cliente
@@ -64,6 +66,7 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
+
     // Eliminar Producto
     $producto->delete();
     // Respuesta al Cliente

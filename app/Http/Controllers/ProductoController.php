@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+ 
 
 class ProductoController extends Controller
 {
+    
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $productos = Producto::all();
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -28,7 +32,16 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validar Productos
+        $datos = $request->validate([
+        'nombre' =>['required', 'string', 'max:100'],
+        'descripcion' =>['nullable','string', 'max:255'],
+        'precio' =>['required', 'integer', 'min:1000'],
+         ]);
+         //Guardar Datos
+         $producto = Producto::create($datos);
+         // Respuesta al Cliente
+        return response()->json(['success' => true, 'message' => 'Producto creado'], 201);
     }
 
     /**
